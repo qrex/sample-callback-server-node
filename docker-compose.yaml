@@ -9,9 +9,6 @@ services:
       - MONGODB_URI=scaleapi-callback-service-db
     ports:
       - "3000:3000"
-#    depends_on:
-#      reviewservice-db:
-#        condition: service_healthy
 
   scaleapi-callback-service-db:
     image:
@@ -20,6 +17,3 @@ services:
       scaleapi-callback-service-db
     ports:
       - "27017:27017"
-#    healthcheck:
-#      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
-#      timeout: 20s
