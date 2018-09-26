@@ -23,21 +23,13 @@ def collect_task_results(label, url):
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description='Send review to be classified to scaleapi')
+    parser = argparse.ArgumentParser(description='Send review to be classified to scaleapi')
     parser.add_argument('-l', '--label', required=True, help='Label for the reviews')
-    parser.add_argument('-u', '--db_user', required=True, help='The user for the mongoDB')
-    parser.add_argument('-p', '--db_password', required=True,help='The password for the mongoDB')
-    parser.add_argument('-db', '--db_name', required=True, help='The mongo database name')
-    parser.add_argument('-host', '--host', required=True, help='The host')
-    parser.add_argument('-dbp', '--db_port', required=True, help='The mongo database port')
+    parser.add_argument('url', help='URL of mongodb, e.g. mongodb://localhost:27017/test')
     parser.add_argument('file', help='Json file with reviews to label')
-
     args = parser.parse_args()
-    MONGODBURL = "mongodb://" + urllib.parse.quote_plus(args.db_user) + ":" + urllib.parse.quote_plus(
-        args.db_password)+"@"+args.host+":"+args.db_port+"/"+args.db_name
 
-    data = collect_task_results(args.label, MONGODBURL)
+    data = collect_task_results(args.label, args.url)
     with open(args.file, "w", encoding='utf-8') as write_file:
         json.dump(data, write_file, ensure_ascii=False)
 
